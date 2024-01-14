@@ -50,7 +50,7 @@ public class ResourceReload : AsyncResource
         Alt.Log("Resource Reload stopped");
     }
 
-    private static ResourceReloadConfig ReadConfiguration()
+    private static AltVResourceReloadConfig ReadConfiguration()
     {
         var configurationReader = new ConfigurationReader();
         var configuration = configurationReader.GetConfiguration();

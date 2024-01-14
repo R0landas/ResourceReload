@@ -8,13 +8,13 @@ internal sealed class ConfigurationReader
     private readonly AltVLogger logger = new();
     private const string ConfigFilePath = "resources/ResourceReload/reloadconfig.json";
     
-    internal ResourceReloadConfig? GetConfiguration()
+    internal AltVResourceReloadConfig? GetConfiguration()
     {
         var rawConfig = GetRawConfig();
         return ParseConfig(rawConfig);
     }
 
-    private ResourceReloadConfig? ParseConfig(string? rawConfig)
+    private AltVResourceReloadConfig? ParseConfig(string? rawConfig)
     {
         if (string.IsNullOrWhiteSpace(rawConfig))
         {
@@ -27,7 +27,7 @@ internal sealed class ConfigurationReader
             PropertyNameCaseInsensitive = true
         };
         
-        var config = JsonSerializer.Deserialize<ResourceReloadConfig>(rawConfig, jsonOptions);
+        var config = JsonSerializer.Deserialize<AltVResourceReloadConfig>(rawConfig, jsonOptions);
 
         if (config is null)
         {

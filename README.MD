@@ -18,6 +18,7 @@ This resource will monitor your build directory for changes, once any file is ch
 
 ```json
 {
+  "useAutoReconnect": true,
   "resources": [
     {
       "name": "ResourceName",
@@ -41,6 +42,9 @@ a single resource. You can include as many projects as you want.
 
 * `buildDirectory` is where your build artifacts live
 * `targetDirectory` is the directory where files from `buildDirectory` will be copied to
+
+When `useAutoReconnect` is set to true, resource reload will try to reconnect the local client **works only for local development**
+as described in [altv docs](https://docs.altv.mp/articles/auto_reconnect.html#)
 
 #### ⚠️ IMPORTANT
 1. Paths are relative to `altv-server.exe`

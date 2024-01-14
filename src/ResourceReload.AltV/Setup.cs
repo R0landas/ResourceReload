@@ -1,6 +1,8 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using ResourceReload.AltV.Common.Interfaces;
+using ResourceReload.AltV.Features.AutoReconnect;
+using ResourceReload.AltV.Features.Configuration;
 using ResourceReload.AltV.Features.ResourceManagement;
 using ResourceReload.Core;
 using ResourceReload.Core.Common.Interfaces;
@@ -11,12 +13,13 @@ namespace ResourceReload.AltV;
 
 internal static class Setup
 {
-    internal static IServiceCollection RegisterServices(this IServiceCollection services, ResourceReloadConfig config)
+    internal static IServiceCollection RegisterServices(this IServiceCollection services, AltVResourceReloadConfig config)
     {
         services.AddSingleton<IEventHandler, ResourceStartedEventHandler>();
         services.AddSingleton<IEventHandler, ResourceStoppedEventHandler>();
         
         services.AddSingleton(config);
+        services.AddSingleton<ResourceReloadConfig>(config);
         
         services.AddSingleton<ILogger, AltVLogger>();
         
@@ -33,6 +36,12 @@ internal static class Setup
         }
         
         services.AddCoreServices();
+
+        if (config.UseAutoReconnect)
+        {
+            services.AddSingleton<ReconnectService>();
+            services.AddSingleton<IEventHandler, ReconnectPlayerOnResourceStartedEventHandler>();
+        }
 
         return services;
     }
