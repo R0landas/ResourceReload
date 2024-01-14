@@ -34,6 +34,11 @@ internal sealed class ResourceStoppedEventHandler(IPublisher mediator, ResourceR
             return;
         }
         
+        foreach (var player in Alt.GetAllPlayers())
+        {
+            player.Kick($"Restarting resource {resource.Name}");
+        }
+        
         await mediator.Publish(new ResourceStoppedNotification(resource.Name));
     }
 }
