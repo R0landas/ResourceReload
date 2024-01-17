@@ -1,4 +1,5 @@
 using AltV.Net;
+using AltV.Net.Async;
 using MediatR;
 using ResourceReload.AltV.Common.Interfaces;
 using ResourceReload.Core.Features.Configuration;
@@ -10,15 +11,15 @@ internal sealed class ResourceStartedEventHandler(IPublisher mediator, ResourceR
 {
     public void Register()
     {
-        Alt.OnAnyResourceStart += ResourceStarted;
+        AltAsync.OnResourceStart += ResourceStarted;
     }
 
     public void Unregister()
     {
-        Alt.OnAnyResourceStart -= ResourceStarted;
+        AltAsync.OnResourceStart -= ResourceStarted;
     }
 
-    private async void ResourceStarted(INativeResource resource)
+    private async Task ResourceStarted(INativeResource resource)
     {
         if (!config.Resources.Any(r => r.Name.Equals(resource.Name)))
         {
