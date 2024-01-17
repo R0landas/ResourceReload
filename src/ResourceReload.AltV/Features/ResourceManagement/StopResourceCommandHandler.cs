@@ -1,4 +1,5 @@
 using AltV.Net;
+using AltV.Net.Async;
 using MediatR;
 using ResourceReload.Core.Features.ResourceManagement;
 
@@ -8,7 +9,7 @@ internal sealed class StopResourceCommandHandler : IRequestHandler<StopResourceC
 {
     public Task Handle(StopResourceCommand request, CancellationToken cancellationToken)
     {
-        Alt.StopResource(request.ResourceName);
+        AltAsync.RunOnMainThread(() => Alt.StopResource(request.ResourceName));
         
         return Task.CompletedTask;
     }

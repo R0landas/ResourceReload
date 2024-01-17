@@ -1,4 +1,5 @@
 using AltV.Net;
+using AltV.Net.Async;
 using MediatR;
 using ResourceReload.Core.Features.ResourceManagement;
 
@@ -8,7 +9,7 @@ internal sealed class StartResourceCommandHandler : IRequestHandler<StartResourc
 {
     public Task Handle(StartResourceCommand request, CancellationToken cancellationToken)
     {
-        Alt.StartResource(request.ResourceName);
+        AltAsync.RunOnMainThread(() => Alt.StartResource(request.ResourceName));
         
         return Task.CompletedTask;
     }
